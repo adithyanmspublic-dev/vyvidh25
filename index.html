@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Animated Launch Button</title>
+<style>
+  /* Basic Setup */
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: sans-serif;
+    /* This transition is key for the fade-to-black effect */
+    transition: background-color 1.5s ease;
+  }
+
+  /* Style for when the exit animation is triggered */
+  body.exiting {
+    background-color: #000000;
+  }
+
+  /* The Button's new design */
+  .launch-button {
+    display: inline-block;
+    padding: 18px 35px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #004aad;
+    background-color: transparent;
+    border: 3px solid #004aad;
+    border-radius: 50px; /* Pill shape */
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    transform: scale(1); /* Initial state for animation */
+    opacity: 1; /* Initial state for animation */
+  }
+
+  .launch-button:hover {
+    background-color: #004aad;
+    color: white;
+    box-shadow: 0 8px 15px rgba(0, 74, 173, 0.2);
+  }
+
+  /* Animation class that gets added by JavaScript */
+  .launch-button.animate-exit {
+    /* Triggers the keyframe animation below */
+    animation: shrinkAndFade 1.5s forwards ease-in-out;
+  }
+
+  /* Keyframe definition for the button's exit animation */
+  @keyframes shrinkAndFade {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<a href="https://vyvidh.vidyaacademy.ac.in/" class="launch-button" id="launchButton">
+Launch Website
+</a>
+
+<script>
+  // Select the button element by its ID
+  const launchButton = document.getElementById('launchButton');
+
+  // Add a 'click' event listener to the button
+  launchButton.addEventListener('click', function(event) {
+    
+    // 1. Prevent the default browser action (i.e., stop it from instantly redirecting)
+    event.preventDefault();
+
+    // 2. Get the destination URL from the button's href attribute
+    const destinationUrl = this.href;
+
+    // 3. Add the animation classes to the button and the body
+    // This triggers the CSS animations and transitions
+    this.classList.add('animate-exit');
+    document.body.classList.add('exiting');
+
+    // 4. Wait for the animations to finish, then redirect
+    // The delay (1500ms) should match the duration of your longest animation
+    setTimeout(function() {
+      window.location.href = destinationUrl;
+    }, 1500); // 1.5 seconds
+
+  });
+</script>
+
+</body>
+</html>
